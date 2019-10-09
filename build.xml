@@ -45,7 +45,7 @@
                 </archives>
             </restrict>
             <manifest>
-                <attribute name="Main-Class" value="main.App"/>
+                <attribute name="main.Main-Class" value="main.Main"/>
             </manifest>
         </jar>
     </target>

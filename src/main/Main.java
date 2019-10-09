@@ -1,4 +1,4 @@
-import main.MainForm;
+package main;
 
 public class Main {
 
