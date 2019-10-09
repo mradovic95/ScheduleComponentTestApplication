@@ -31,4 +31,3 @@ logs/
 /dist/
 /nbdist/
 /.nb-gradle/
-*.xml
