@@ -1,10 +1,10 @@
 package controllers;
 
-import importexport.impl.SheduleImportExportJsonImplementation;
 import main.MainForm;
 import model.Event;
 import model.Schedule;
 import model.ScheduleTableModel;
+import service.ScheduleService;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -14,11 +14,11 @@ import java.io.IOException;
 public class ImportDataActionListener implements ActionListener {
 
     private ScheduleTableModel scheduleTableModel;
-    private SheduleImportExportJsonImplementation exportJsonImplementation;
+    private ScheduleService scheduleService;
 
-    public ImportDataActionListener(ScheduleTableModel scheduleTableModel) {
+    public ImportDataActionListener(ScheduleTableModel scheduleTableModel, ScheduleService scheduleService) {
         this.scheduleTableModel = scheduleTableModel;
-        this.exportJsonImplementation = new SheduleImportExportJsonImplementation();
+        this.scheduleService = scheduleService;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ImportDataActionListener implements ActionListener {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             Schedule schedule = null;
             try {
-                schedule = this.exportJsonImplementation.importSchedule(chooser.getSelectedFile());
+                schedule = this.scheduleService.loadSchedule(chooser.getSelectedFile());
             } catch (IOException e) {
                 e.printStackTrace();
             }

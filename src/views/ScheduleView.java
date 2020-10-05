@@ -4,10 +4,17 @@ import controllers.AddNewEventListener;
 import controllers.DeleteEvenListener;
 import controllers.ExportDataActionListener;
 import controllers.ImportDataActionListener;
+import importexport.ScheduleImportExport;
+import importexport.impl.SheduleImportExportJsonImplementation;
 import model.ScheduleTableModel;
+import service.EventService;
+import service.ScheduleService;
+import service.impl.EventServiceImpl;
+import service.impl.ScheduleServiceImpl;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class ScheduleView extends JPanel {
 
@@ -49,10 +56,14 @@ public class ScheduleView extends JPanel {
         this.importButton = new JButton("IMPORT");
         this.exportButton = new JButton("EXPORT");
 
+        EventService eventService = new EventServiceImpl();
+        ScheduleImportExport<File> scheduleImportExport = new SheduleImportExportJsonImplementation();
+        ScheduleService scheduleService = new ScheduleServiceImpl(scheduleImportExport, eventService);
+
         addButton.addActionListener(new AddNewEventListener((ScheduleTableModel) this.scheduleTable.getModel(), this));
         deleteButton.addActionListener(new DeleteEvenListener((ScheduleTableModel) this.scheduleTable.getModel(), this));
-        importButton.addActionListener(new ImportDataActionListener((ScheduleTableModel) scheduleTable.getModel()));
-        exportButton.addActionListener(new ExportDataActionListener((ScheduleTableModel) scheduleTable.getModel()));
+        importButton.addActionListener(new ImportDataActionListener((ScheduleTableModel) scheduleTable.getModel(), scheduleService));
+        exportButton.addActionListener(new ExportDataActionListener((ScheduleTableModel) scheduleTable.getModel(), scheduleService));
 
         // Add panel for buttons
         JPanel buttonsPanel = new JPanel();
